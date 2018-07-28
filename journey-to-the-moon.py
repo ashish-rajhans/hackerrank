@@ -7,15 +7,34 @@ import re
 import sys
 
 def updateGroups(countryGroups, astro1, astro2):
-
+    astro1Found = False
+    astro2Found = False
+    astro1Group = {}
+    astro2Group = {}
+    i = 0
     for group in countryGroups:
         if astro1 in group:
-            group.add(astro2)
-            return
+            astro1Group = group
+            astro1Found = True
         if astro2 in group:
-            group.add(astro1)
-            return
-    newGroup = {astro1, astro2}
+            astro2Group = group
+            astro2Found = True
+        if astro1Found and astro2Found:
+            break
+
+    if not astro1Found and not astro2Found:    
+        newGroup = {astro1, astro2}
+        countryGroups.append(newGroup)
+        return
+    if astro1Found and not astro2Found:
+        astro1Group.add(astro2)
+        return
+    if not astro1Found and astro2Found:
+        astro2Group.add(astro2)
+        return
+    newGroup = astro1Group.union(astro2Group)
+    countryGroups.remove(astro1Group)
+    countryGroups.remove(astro2Group)
     countryGroups.append(newGroup)
 
 def getSingleInSetCount(countryGroups, n):
@@ -37,7 +56,7 @@ def calculatePairCount(countryGroups, singleInSetCount):
             totalCount = totalCount + groupCounts[i] * groupCounts[j]
     for i in range(len(groupCounts)):
         totalCount = totalCount + groupCounts[i] * singleInSetCount
-    return totalCount
+    return int(totalCount)
 
 # Complete the journeyToMoon function below.
 def journeyToMoon(n, astronaut):
@@ -54,21 +73,22 @@ def journeyToMoon(n, astronaut):
 
 if __name__ == '__main__':
     #fptr = open(os.environ['OUTPUT_PATH'], 'w')
+    while (True):
 
-    np = input().split()
+        np = raw_input().split()
 
-    n = int(np[0])
+        n = int(np[0])
 
-    p = int(np[1])
+        p = int(np[1])  
 
-    astronaut = []
+        astronaut = []
 
-    for _ in range(p):
-        astronaut.append(list(map(int, input().rstrip().split())))
+        for _ in range(p):
+            astronaut.append(list(map(int, raw_input().rstrip().split())))
 
-    result = int(journeyToMoon(n, astronaut))
+        result = int(journeyToMoon(n, astronaut))
 
-    print (result)
+        print (result)
 
     #fptr.write(str(result) + '\n')
 
