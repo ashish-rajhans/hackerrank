@@ -36,7 +36,7 @@ int BeautifulPath::getShortestPath(int n, vector<vector<int>> edges, int A, int 
 	vector<bool> visited(n, false);
 	graph = make_shared<AdjacencyGraph>(n);
 	vector<vector<int>> cost(n);
-	cost[A] = 0;
+	//cost[A] = 0;
 
 	createGraph(edges);
 
@@ -56,11 +56,11 @@ int BeautifulPath::getShortestPath(int n, vector<vector<int>> edges, int A, int 
 		{
 			if (!visited[neighbour.first])
 			{
-				int newCost = cost[currNode] | neighbour.second;
-				if (newCost < cost[neighbour.first])
+				//int newCost = cost[currNode] | neighbour.second;
+		/*		if (newCost < cost[neighbour.first])
 				{
 					cost[neighbour.first] = newCost;
-				}
+				}*/
 
 				if (cost[neighbour.first] < cost[B] && !addedToQ[neighbour.first])
 				{
@@ -71,7 +71,7 @@ int BeautifulPath::getShortestPath(int n, vector<vector<int>> edges, int A, int 
 		}
 	}
 
-	return cost[B];
+	return 1;//cost[B];
 }
 
 void BeautifulPath::createGraph(vector<vector<int>> & edges)
